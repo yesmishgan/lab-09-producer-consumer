@@ -27,25 +27,86 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(gumbo)
+find_package(gumbo CONFIG REQUIRED)
+
+hunter_add_package(Boost COMPONENTS thread program_options)
+find_package(Boost CONFIG REQUIRED thread program_options)
+
+hunter_add_package(OpenSSL)
+find_package(OpenSSL REQUIRED)
+
+hunter_add_package(Beast)
+find_package(Beast CONFIG REQUIRED)
+
 # TODO: change template word to project name and delete this comment
 add_library(template STATIC
   # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
-)
+        sources/main.cpp
+        #sources/crawler.cpp
+        #include/crawler.hpp
+        #sources/downloader.cpp
+        #include/downloader.hpp
+        #sources/parser.cpp
+        #include/parser.hpp
+        include/root_certificates.hpp)
 add_executable(tests
   # TODO: enum your files and delete this comment
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
-)
+        sources/crawler.cpp
+        include/crawler.hpp
+        sources/downloader.cpp
+        include/downloader.hpp
+        sources/parser.cpp
+        include/parser.hpp
+        include/root_certificates.hpp)
+
+add_executable(main
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+        #sources/crawler.cpp
+        #include/crawler.hpp
+        #sources/downloader.cpp
+        #include/downloader.hpp
+        #sources/parser.cpp
+        #include/parser.hpp
+        include/root_certificates.hpp)
 
 # TODO: change template word to project name and delete this comment
 target_include_directories(template
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third-party/ThreadPool
 )
 target_include_directories(tests
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third-party/ThreadPool
 )
+target_link_directories(main
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third-party/ThreadPool
+        )
 # TODO: change template word to project name and delete this comment
-target_link_libraries(tests GTest::gtest_main template)
+target_link_libraries(template
+        GTest::gtest_main
+        gumbo::gumbo
+        OpenSSL::SSL
+        Beast::Beast
+        Boost::program_options
+        Boost::thread)
+target_link_libraries(tests
+        GTest::gtest_main
+        gumbo::gumbo
+        OpenSSL::SSL
+        Beast::Beast
+        Boost::program_options
+        Boost::thread
+        template)
+target_link_libraries(main
+        gumbo::gumbo
+        Beast::Beast
+        OpenSSL::SSL
+        Boost::program_options
+        Boost::thread
+        template)
 
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
