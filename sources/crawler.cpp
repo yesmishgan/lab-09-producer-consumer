@@ -35,6 +35,6 @@ int Crawler::initChain() {
   if (!vm.count("url"))
     return 1;
   Downloader a(param.host, param.port, param.depth, param.networkThreads);
-  a.downloadPage();
+  a.downloadPage(a.urlToHost(), a.urlToTarget());
   return 0;
 }

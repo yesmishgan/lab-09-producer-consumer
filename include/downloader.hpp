@@ -4,10 +4,14 @@
 #define TEMPLATE_DOWNLOADER_HPP
 
 #include <crawler.hpp>
+#include "root_certificates.hpp"
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+#include <boost/beast/version.hpp>
+#include <boost/asio/connect.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ssl/error.hpp>
 #include <boost/asio/ssl/stream.hpp>
-#include <boost/beast/ssl.hpp>
-#include "root_certificates.hpp"
 
 namespace beast = boost::beast; // from <boost/beast.hpp>
 namespace http = beast::http;   // from <boost/beast/http.hpp>
@@ -22,9 +26,12 @@ class Downloader {
              const int& port,
              const int& depth,
              const int& thread);
-  void downloadPage();
+  std::string downloadPage(std::string host, std::string target);
+  void processing();
+  std::string urlToHost();
+  std::string urlToTarget();
  private:
-  std::string host;
+  std::string url;
   int port;
   int depth;
   int thread;

@@ -49,7 +49,7 @@ add_library(template STATIC
         include/downloader.hpp
         sources/parser.cpp
         include/parser.hpp
-        include/root_certificates.hpp)
+        include/root_certificates.hpp include/ThreadPool.h)
 add_executable(tests
   # TODO: enum your files and delete this comment
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
@@ -59,7 +59,7 @@ add_executable(tests
         include/downloader.hpp
         sources/parser.cpp
         include/parser.hpp
-        include/root_certificates.hpp)
+        include/root_certificates.hpp include/ThreadPool.h)
 
 add_executable(crawler
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
@@ -69,7 +69,7 @@ add_executable(crawler
         include/downloader.hpp
         sources/parser.cpp
         include/parser.hpp
-        include/root_certificates.hpp)
+        include/root_certificates.hpp include/ThreadPool.h)
 
 # TODO: change template word to project name and delete this comment
 target_include_directories(template
