@@ -17,11 +17,17 @@ using tcp = net::ip::tcp;       // from <boost/asio/ip/tcp.hpp
 
 class Downloader {
  public:
-  Downloader(const std::string& hostSite, const int& th);
+  Downloader();
+  Downloader(const std::string& host,
+             const int& port,
+             const int& depth,
+             const int& thread);
   void downloadPage();
  private:
   std::string host;
-  int threads;
+  int port;
+  int depth;
+  int thread;
 };
 
 #endif  // TEMPLATE_DOWNLOADER_HPP

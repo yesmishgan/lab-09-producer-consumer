@@ -43,12 +43,12 @@ find_package(Beast CONFIG REQUIRED)
 add_library(template STATIC
   # enum your files and delete this comment
         sources/main.cpp
-        #sources/crawler.cpp
-        #include/crawler.hpp
-        #sources/downloader.cpp
-        #include/downloader.hpp
-        #sources/parser.cpp
-        #include/parser.hpp
+        sources/crawler.cpp
+        include/crawler.hpp
+        sources/downloader.cpp
+        include/downloader.hpp
+        sources/parser.cpp
+        include/parser.hpp
         include/root_certificates.hpp)
 add_executable(tests
   # TODO: enum your files and delete this comment
@@ -61,14 +61,14 @@ add_executable(tests
         include/parser.hpp
         include/root_certificates.hpp)
 
-add_executable(main
+add_executable(crawler
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
-        #sources/crawler.cpp
-        #include/crawler.hpp
-        #sources/downloader.cpp
-        #include/downloader.hpp
-        #sources/parser.cpp
-        #include/parser.hpp
+        sources/crawler.cpp
+        include/crawler.hpp
+        sources/downloader.cpp
+        include/downloader.hpp
+        sources/parser.cpp
+        include/parser.hpp
         include/root_certificates.hpp)
 
 # TODO: change template word to project name and delete this comment
@@ -80,7 +80,7 @@ target_include_directories(tests
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third-party/ThreadPool
 )
-target_link_directories(main
+target_link_directories(crawler
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third-party/ThreadPool
         )
@@ -100,7 +100,7 @@ target_link_libraries(tests
         Boost::program_options
         Boost::thread
         template)
-target_link_libraries(main
+target_link_libraries(crawler
         gumbo::gumbo
         Beast::Beast
         OpenSSL::SSL
